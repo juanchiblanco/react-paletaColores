@@ -1,7 +1,5 @@
 # 🎨 React - Paleta de Colores
 
-## 🟢🟡 Dificultad: Fácil a intermedia
-
 ## 📌 Descripción
 
 Este proyecto consiste en crear una aplicación web con **React** que permita al usuario **guardar colores personalizados** a través de un formulario con:
