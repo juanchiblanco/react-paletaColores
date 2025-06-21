@@ -9,7 +9,7 @@ function App() {
       <h1 className="text-center">Paleta de Colores</h1>
       <FormularioColores/>
     </main>
-      <footer className="bg-dark text-light text-center py-3">
+      <footer className="bg-dark-subtle text-light text-center py-3">
         <p>&copy;Todos los derechos reservados</p>
       </footer>
     </>
