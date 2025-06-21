@@ -1,9 +1,10 @@
-import ListGroup from "react-bootstrap/ListGroup";
+import CardColor from './CardColor';
 
 const ListaCards = () => {
   return (
-    <ListGroup>
-    </ListGroup>
+    <article className="row justify-content-start gap-3">
+      <CardColor/>
+    </article>
   );
 };
 
