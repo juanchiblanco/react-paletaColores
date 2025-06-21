@@ -1,4 +1,4 @@
-import { Button, ListGroup, Card } from "react-bootstrap";
+import { Button, Card } from "react-bootstrap";
 
 const CardColor = ({nombreColor}) => {
   return (
