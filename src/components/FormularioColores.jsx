@@ -14,6 +14,11 @@ const FormularioColores = () => {
     setColor('')
   }
 
+  const borrarColor = (nombreColor) => {
+    const coloresFiltrado = colores.filter((item)=> item !== nombreColor)
+    setColores(coloresFiltrado)
+  }
+
   return (
     <>
       <section className="container row justify-content-center">
@@ -31,7 +36,7 @@ const FormularioColores = () => {
           </div>
         </Form>
         <div className="w-75 border border-0">
-          <ListaCards colores={colores}/>
+          <ListaCards colores={colores} borrarColor={borrarColor}/>
         </div>
       </section>
     </>
