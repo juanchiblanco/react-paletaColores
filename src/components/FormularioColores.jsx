@@ -3,10 +3,12 @@ import Form from "react-bootstrap/Form";
 import ListaCards from "./ListaCards";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { crearColor, leerColores } from "../helpers/queries.js";
+import Swal from "sweetalert2";
 
 const FormularioColores = () => {
-  const coloresLocalStorage = JSON.parse(localStorage.getItem("listaColores")) || []
-  const [colores, setColores] = useState(coloresLocalStorage);
+
+  const [colores, setColores] = useState([]);
 
   const {
     register,
@@ -16,17 +18,30 @@ const FormularioColores = () => {
   } = useForm();
 
   useEffect(() => {
-    localStorage.setItem("listaColores", JSON.stringify(colores));
-  }, [colores]);
+    obtenerColores()
+  }, []);
 
-  const agregarColor = (data) => {
-    setColores([...colores, data.inputColor]);
-    reset();
-  };
+  const obtenerColores = async() =>{
+    const respuesta = await leerColores()
+    if(respuesta.status===200){
+      const datos = await respuesta.json()
+      setColores(datos)
+      }else{
+      console.info('Ocurrio un error al buscar los colores')
+    }
+  }
 
-  const borrarColor = (nombreColor) => {
-    const coloresFiltrado = colores.filter((item) => item !== nombreColor);
-    setColores(coloresFiltrado);
+  const agregarColor = async(nuevoColor) => {
+   const respuesta = await crearColor(nuevoColor)
+    if(respuesta.status===200){
+      Swal.fire({
+          title: "Tarea agregada!",
+          text: `Se agrego ${nuevoColor.inputColor} a la lista.`,
+          icon: "success",
+        });
+        reset();
+        obtenerColores()
+    }
   };
 
   return (
@@ -58,7 +73,7 @@ const FormularioColores = () => {
           </div>
         </Form>
         <div className="w-75 border border-0">
-          <ListaCards colores={colores} borrarColor={borrarColor} />
+          <ListaCards colores={colores}/>
         </div>
       </section>
     </>
