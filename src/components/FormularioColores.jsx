@@ -34,7 +34,7 @@ const FormularioColores = () => {
     const respuesta = await crearColor(nuevoColor);
     if (respuesta.status === 201) {
       Swal.fire({
-        title: "Tarea agregada!",
+        title: "Color agregada!",
         text: `Se agrego ${nuevoColor.inputColor} a la lista.`,
         icon: "success",
       });
