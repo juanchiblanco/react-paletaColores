@@ -1,8 +1,25 @@
-import { Button, Card } from "react-bootstrap";
+import { Button, Card, Modal, Form } from "react-bootstrap";
 import Swal from "sweetalert2";
 import { borrarColorID, leerColores } from "../helpers/queries.js";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
 
 const CardColor = ({color, setColores}) => {
+
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => {
+    setValue("inputColor", color.inputColor);
+    setShow(true);
+  };
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setValue,
+  } = useForm();
 
   const eliminarColor = () => {
     Swal.fire({
@@ -38,13 +55,49 @@ const CardColor = ({color, setColores}) => {
   };
 
   return (
+    <>
     <Card className="col-12 col-md-4 col-lg-3 bg-dark-subtle">
       <Card.Body className="text-center">
         <Card.Title>{color.inputColor}</Card.Title>
         <div className="divColor" style={{backgroundColor: color.inputColor}}></div>
+        <div className="d-flex justify-content-center">
+        <Button
+          variant="warning"
+          className="ms-auto me-2 btn btn-primary text-light"
+          onClick={handleShow}
+        >
+          Editar
+        </Button>
         <Button variant="danger" onClick={eliminarColor}>Borrar</Button>
+        </div>
       </Card.Body>
     </Card>
+    <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Editar tarea</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form.Text>Color: {color.inputColor}</Form.Text>
+          <Form.Control
+                defaultValue=""
+                type="color"
+                className="w-100 my-3"
+                {...register("inputColor")}
+              />
+          <Form.Text className="text-danger">
+          {errors.inputColor?.message}
+        </Form.Text>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Cerrar
+          </Button>
+          <Button variant="primary" onClick={handleSubmit}>
+            Guardar cambios
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      </>
   );
 };
 
