@@ -7,7 +7,6 @@ import { crearColor, leerColores } from "../helpers/queries.js";
 import Swal from "sweetalert2";
 
 const FormularioColores = () => {
-
   const [colores, setColores] = useState([]);
 
   const {
@@ -18,29 +17,29 @@ const FormularioColores = () => {
   } = useForm();
 
   useEffect(() => {
-    obtenerColores()
+    obtenerColores();
   }, []);
 
-  const obtenerColores = async() =>{
-    const respuesta = await leerColores()
-    if(respuesta.status===200){
-      const datos = await respuesta.json()
-      setColores(datos)
-      }else{
-      console.info('Ocurrio un error al buscar los colores')
+  const obtenerColores = async () => {
+    const respuesta = await leerColores();
+    if (respuesta.status === 200) {
+      const datos = await respuesta.json();
+      setColores(datos);
+    } else {
+      console.info("Ocurrio un error al buscar los colores");
     }
-  }
+  };
 
-  const agregarColor = async(nuevoColor) => {
-   const respuesta = await crearColor(nuevoColor)
-    if(respuesta.status===200){
+  const agregarColor = async (nuevoColor) => {
+    const respuesta = await crearColor(nuevoColor);
+    if (respuesta.status === 201) {
       Swal.fire({
-          title: "Tarea agregada!",
-          text: `Se agrego ${nuevoColor.inputColor} a la lista.`,
-          icon: "success",
-        });
-        reset();
-        obtenerColores()
+        title: "Tarea agregada!",
+        text: `Se agrego ${nuevoColor.inputColor} a la lista.`,
+        icon: "success",
+      });
+      reset();
+      obtenerColores();
     }
   };
 
@@ -56,12 +55,11 @@ const FormularioColores = () => {
               <Form.Label className="lead text-light">
                 Elige un color
               </Form.Label>
-              <Form.Control defaultValue=""
+              <Form.Control
+                defaultValue=""
                 type="color"
                 className="w-100 my-3"
-                {...register("inputColor", {
-                  required: "El color es un dato obligatorio",
-                })}
+                {...register("inputColor")}
               />
             </Form.Group>
             <Form.Text className="text-danger">
@@ -73,7 +71,7 @@ const FormularioColores = () => {
           </div>
         </Form>
         <div className="w-75 border border-0">
-          <ListaCards colores={colores}/>
+          <ListaCards colores={colores} setColores={setColores} />
         </div>
       </section>
     </>
